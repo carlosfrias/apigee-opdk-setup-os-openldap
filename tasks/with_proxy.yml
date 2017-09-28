@@ -21,8 +21,7 @@
 
 - name: Downgrade openldap packages if needed
   become: yes
-  shell: "yum downgrade -y {{ item }}"
-  with_items: "{{ openldap_2_4_40 }}"
+  shell: "yum downgrade -y {{ openldap_2_4_40 | join(' ') }}"
   when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
   environment:
     http_proxy: "{{ http_proxy }}"
