@@ -1,0 +1,10 @@
+---
+# tasks file for apigee-opdk-setup-os-openldap
+
+- name: Do not use proxy definitions
+  include: with_no_proxy.yml
+  when: http_proxy is not defined and https_proxy is not defined
+
+- name: Use proxy definitions
+  include: with_proxy.yml
+  when: http_proxy is defined and https_proxy is defined

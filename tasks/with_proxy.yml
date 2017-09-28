@@ -1,0 +1,13 @@
+---
+- name: Downgrade openldap packages if needed with proxy
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: present
+    allow_downgrade: yes
+  with_items: "{{ opendldap_packages_2_4_40 }}"
+  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
