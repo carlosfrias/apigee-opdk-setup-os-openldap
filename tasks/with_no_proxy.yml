@@ -4,7 +4,7 @@
   yum:
     name: "{{ item }}"
     state: present
-  with_items: "{{ openldap_packages }}"
+  with_items: "{{ openldap }}"
 
 #- name: Downgrade openldap packages if needed
 #  become: yes
