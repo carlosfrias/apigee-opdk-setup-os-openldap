@@ -1,10 +1,18 @@
 ---
+- name: Install openldap packages if needed
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: present
+    allow_downgrade: yes
+  with_items: "{{ openldap_packages }}"
+
 - name: Downgrade openldap packages if needed
   become: yes
   yum:
     name: "{{ item }}"
     state: present
     allow_downgrade: yes
-  with_items: "{{ opendldap_packages_2_4_40 }}"
+  with_items: "{{ openldap_2_4_40 }}"
   when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
 
