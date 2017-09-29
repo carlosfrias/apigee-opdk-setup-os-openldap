@@ -11,3 +11,6 @@ openldap_2_4_40:
 - openldap-clients-2.4.40
 - openldap-servers-2.4.40
 
+#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-2.4.40-13.el7.x86_64.rpm
+#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-servers-2.4.40-13.el7.x86_64.rpm
+#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-clients-2.4.40-13.el7.x86_64.rpm
