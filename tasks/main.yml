@@ -8,3 +8,13 @@
 - name: Use proxy definitions
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
+
+
+# Keep as we may need it as a manual backup, wait before implementing
+#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-2.4.40-13.el7.x86_64.rpm
+#yum downgrade openldap-2.4.40-13.el7.x86_64.rpm -y
+#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-servers-2.4.40-13.el7.x86_64.rpm
+#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-clients-2.4.40-13.el7.x86_64.rpm
+#yum install openldap-servers-2.4.40-13.el7.x86_64.rpm -y
+#yum install openldap-clients-2.4.40-13.el7.x86_64.rpm -y
+#yum install apigee-openldap -y
