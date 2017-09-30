@@ -1,29 +1,34 @@
 ---
-- name: Install openldap packages if needed
+- name: Install openldap packages if needed with proxy
   become: yes
   yum:
     name: "{{ item }}"
     state: present
   with_items: "{{ openldap }}"
-
-#- name: Downgrade openldap packages if needed with proxy
-#  become: yes
-#  yum:
-#    name: "{{ item }}"
-#    state: present
-#    allow_downgrade: yes
-#  with_items: "{{ opendldap_packages_2_4_40 }}"
-#  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
-#  environment:
-#    http_proxy: "{{ http_proxy }}"
-#    https_proxy: "{{ https_proxy }}"
-#    no_proxy: "{{ no_proxy }}"
-
-- name: Downgrade openldap packages if needed
-  become: yes
-  shell: "yum downgrade -y {{ openldap_2_4_40 | join(' ') }}"
-  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+  when: opdk_version | version_compare('4.17.01', '<')
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
     no_proxy: "{{ no_proxy }}"
+
+- block:
+  - name: Downgrade openldap packages if needed with proxy
+    become: yes
+    shell: "yum downgrade -y {{ openldap_2_4_40 | join(' ') }}"
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
+
+  rescue:
+    - name: Install because downgrade failure means the openldap packages are needed with proxy
+      become: yes
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ openldap_2_4_40 }}"
+      environment:
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}"
+        no_proxy: "{{ no_proxy }}"
+  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
