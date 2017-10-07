@@ -34,7 +34,6 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
       no_proxy: "{{ no_proxy }}"
-
   rescue:
     - block:
       - name: Install because downgrade failure means the openldap packages are needed with proxy
@@ -47,7 +46,7 @@
           http_proxy: "{{ http_proxy }}"
           https_proxy: "{{ https_proxy }}"
           no_proxy: "{{ no_proxy }}"
-       rescue:
+      rescue:
         - name: Download openldap manually, may need to change the link
           yum:
             name: "{{ item }}"
