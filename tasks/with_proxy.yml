@@ -48,10 +48,7 @@
           no_proxy: "{{ no_proxy }}"
       rescue:
         - name: Download openldap manually, may need to change the link
-          yum:
-            name: "{{ item }}"
-            state: present
-          with_items: "{{ openldap_manual_download }}"
+          shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
           environment:
             http_proxy: "{{ http_proxy }}"
             https_proxy: "{{ https_proxy }}"
