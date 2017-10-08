@@ -44,7 +44,18 @@
         - { src: "/lib64/libldap_r-2.4.so.2.10.3", path: "/lib64/libldap_r-2.4.so.2" }
 
       rescue:
-       - name: Download openldap manually, may need to change the link
-         shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
+        - name: Download openldap manually, may need to change the link
+          shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
+
+        - name: Update LDAP dependent libraries
+          file:
+            force: yes
+            state: link
+            src: "{{ item.src }}"
+            path: "{{ item.path }}"
+          with_items:
+          - { src: "/lib64/liblber-2.4.so.2.10.3", path: "/lib64/liblber-2.4.so.2" }
+          - { src: "/lib64/libslapi-2.4.so.2.10.3", path: "/lib64/libslapi-2.4.so.2" }
+          - { src: "/lib64/libldap_r-2.4.so.2.10.3", path: "/lib64/libldap_r-2.4.so.2" }
 
   when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
