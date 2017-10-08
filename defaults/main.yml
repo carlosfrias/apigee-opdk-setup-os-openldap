@@ -5,7 +5,6 @@ openldap:
 - openldap-clients
 - openldap-servers
 
-
 openldap_2_4_40:
 - openldap-2.4.40
 - openldap-clients-2.4.40
