@@ -32,16 +32,13 @@
           state: present
         with_items: "{{ openldap_2_4_40 }}"
 
-      - name: Update LDAP dependent libraries
+      - name: Update LDAP dependent libraries links
         file:
           force: yes
           state: link
           src: "{{ item.src }}"
           path: "{{ item.path }}"
-        with_items:
-        - { src: "/lib64/liblber-2.4.so.2.10.3", path: "/lib64/liblber-2.4.so.2" }
-        - { src: "/lib64/libslapi-2.4.so.2.10.3", path: "/lib64/libslapi-2.4.so.2" }
-        - { src: "/lib64/libldap_r-2.4.so.2.10.3", path: "/lib64/libldap_r-2.4.so.2" }
+        with_items: "{{ ldap_dependent_library_links }}"
 
       rescue:
         - name: Download openldap manually, may need to change the link
