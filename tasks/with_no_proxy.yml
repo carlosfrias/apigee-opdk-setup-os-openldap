@@ -46,7 +46,13 @@
 
 #      rescue:
     - name: Download openldap manually, may need to change the link
-      shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
+      become: yes
+      yum:
+        name: "{{ item }}"
+        state: present
+        allow_downgrade: yes
+      with_items: "{{ openldap_manual_download }}"
+#      shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
 
 #        - name: Update LDAP dependent libraries
 #          file:
