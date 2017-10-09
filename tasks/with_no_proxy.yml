@@ -8,30 +8,20 @@
   when: opdk_version | version_compare('4.17.01', '<')
 
 - block:
-  - name: Downgrade openldap packages if needed
-    become: yes
-    shell: "yum downgrade -y {{ openldap_2_4_40 | join(' ') }}"
-
   - name: Update LDAP dependent libraries
     file:
       force: yes
       state: link
       src: "{{ item.src }}"
       path: "{{ item.path }}"
-    with_items:
-    - { src: "/lib64/liblber-2.4.so.2.10.3", path: "/lib64/liblber-2.4.so.2" }
-    - { src: "/lib64/libslapi-2.4.so.2.10.3", path: "/lib64/libslapi-2.4.so.2" }
-    - { src: "/lib64/libldap_r-2.4.so.2.10.3", path: "/lib64/libldap_r-2.4.so.2" }
+    with_items: "{{ ldap_dependent_library_links }}"
+
+  - name: Downgrade openldap packages if needed
+    become: yes
+    shell: "yum downgrade -y {{ openldap_2_4_40 | join(' ') }}"
 
   rescue:
     - block:
-      - name: Install because downgrade failure means the openldap packages are needed
-        become: yes
-        yum:
-          name: "{{ item }}"
-          state: present
-        with_items: "{{ openldap_2_4_40 }}"
-
       - name: Update LDAP dependent libraries links
         file:
           force: yes
@@ -40,19 +30,24 @@
           path: "{{ item.path }}"
         with_items: "{{ ldap_dependent_library_links }}"
 
-      rescue:
-        - name: Download openldap manually, may need to change the link
-          shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
+      - name: Install because downgrade failure means the openldap packages are needed
+        become: yes
+        yum:
+          name: "{{ item }}"
+          state: present
+          downgrade: yes
+        with_items: "{{ openldap_2_4_40 }}"
 
+      rescue:
         - name: Update LDAP dependent libraries
           file:
             force: yes
             state: link
             src: "{{ item.src }}"
             path: "{{ item.path }}"
-          with_items:
-          - { src: "/lib64/liblber-2.4.so.2.10.3", path: "/lib64/liblber-2.4.so.2" }
-          - { src: "/lib64/libslapi-2.4.so.2.10.3", path: "/lib64/libslapi-2.4.so.2" }
-          - { src: "/lib64/libldap_r-2.4.so.2.10.3", path: "/lib64/libldap_r-2.4.so.2" }
+          with_items: "{{ ldap_dependent_library_links }}"
+
+        - name: Download openldap manually, may need to change the link
+          shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
 
   when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
