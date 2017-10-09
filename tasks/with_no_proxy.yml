@@ -8,13 +8,13 @@
   when: opdk_version | version_compare('4.17.01', '<')
 
 - block:
-  - name: Update LDAP dependent libraries
-    file:
-      force: yes
-      state: link
-      src: "{{ item.src }}"
-      path: "{{ item.path }}"
-    with_items: "{{ ldap_dependent_library_links }}"
+#  - name: Update LDAP dependent libraries
+#    file:
+#      force: yes
+#      state: link
+#      src: "{{ item.src }}"
+#      path: "{{ item.path }}"
+#    with_items: "{{ ldap_dependent_library_links }}"
 
   - name: Downgrade openldap packages if needed
     become: yes
@@ -22,13 +22,13 @@
 
   rescue:
     - block:
-      - name: Update LDAP dependent libraries links
-        file:
-          force: yes
-          state: link
-          src: "{{ item.src }}"
-          path: "{{ item.path }}"
-        with_items: "{{ ldap_dependent_library_links }}"
+#      - name: Update LDAP dependent libraries links
+#        file:
+#          force: yes
+#          state: link
+#          src: "{{ item.src }}"
+#          path: "{{ item.path }}"
+#        with_items: "{{ ldap_dependent_library_links }}"
 
       - name: Install because downgrade failure means the openldap packages are needed
         become: yes
@@ -39,13 +39,13 @@
         with_items: "{{ openldap_2_4_40 }}"
 
       rescue:
-        - name: Update LDAP dependent libraries
-          file:
-            force: yes
-            state: link
-            src: "{{ item.src }}"
-            path: "{{ item.path }}"
-          with_items: "{{ ldap_dependent_library_links }}"
+#        - name: Update LDAP dependent libraries
+#          file:
+#            force: yes
+#            state: link
+#            src: "{{ item.src }}"
+#            path: "{{ item.path }}"
+#          with_items: "{{ ldap_dependent_library_links }}"
 
         - name: Download openldap manually, may need to change the link
           shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
