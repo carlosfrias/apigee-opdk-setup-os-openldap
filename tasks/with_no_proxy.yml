@@ -19,11 +19,14 @@
 
 - name: Download openldap manually, may need to change the link
   become: yes
-  yum:
-    name: "{{ item }}"
-    state: present
-    allow_downgrade: yes
-  with_items: "{{ openldap_manual_download }}"
+  shell: "rpm -Uvh {{ openldap_manual_download[0] }}"
+  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+
+- name: Download openldap manually, may need to change the link
+  become: yes
+  shell: "rpm -ivh {{ item  }}"
+  with_items: "{{ openldap_manual_download[1:2] }}"
+  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
 
 #  - name: Downgrade openldap packages if needed
 #    become: yes
