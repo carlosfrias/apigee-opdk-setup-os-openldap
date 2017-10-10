@@ -9,14 +9,17 @@
   when: opdk_version | version_compare('4.17.01', '<')
 
 - block:
+#  - name: Downgrade openldap packages if needed
+#    become: yes
+#    yum:
+#      name: "{{ item }}"
+#      state: present
+#      allow_downgrade: yes
+#    with_items: "{{ openldap_2_4_40 }}"
+
   - name: Downgrade openldap packages if needed
     become: yes
-    yum:
-      name: "{{ item }}"
-      state: present
-      allow_downgrade: yes
-    with_items: "{{ openldap_2_4_40 }}"
-#    shell: "yum downgrade -y {{ openldap_2_4_40 | join(' ') }}"
+    shell: "yum install -y {{ openldap_2_4_40.join(' ') }}"
 
 #  - name: Update LDAP dependent libraries
 #    file:
@@ -34,7 +37,6 @@
         state: present
         allow_downgrade: yes
       with_items: "{{ openldap_manual_download }}"
-#      shell: "yum downgrade -y {{ openldap_manual_download | join(' ') }}"
 
 #        - name: Update LDAP dependent libraries
 #          file:
