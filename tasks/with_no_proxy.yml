@@ -19,7 +19,7 @@
 
 - name: Download openldap manually, may need to change the link
   become: yes
-  shell: "rpm -Uvh {{ openldap_manual_download[0] }}"
+  shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
   when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
 
 - name: Download openldap manually, may need to change the link
