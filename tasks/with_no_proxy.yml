@@ -8,14 +8,22 @@
   when: opdk_version | version_compare('4.17.01', '<')
 
 #- block:
-- name: Downgrade openldap packages if needed
+#- name: Downgrade openldap packages if needed
+#  become: yes
+#  yum:
+#    name: "{{ item }}"
+#    state: present
+#    allow_downgrade: yes
+#  with_items: "{{ openldap_2_4_40 }}"
+#  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+
+- name: Download openldap manually, may need to change the link
   become: yes
   yum:
     name: "{{ item }}"
     state: present
     allow_downgrade: yes
-  with_items: "{{ openldap_2_4_40 }}"
-  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+  with_items: "{{ openldap_manual_download }}"
 
 #  - name: Downgrade openldap packages if needed
 #    become: yes
