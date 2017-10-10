@@ -20,7 +20,8 @@
 - name: Download openldap manually, may need to change the link
   become: yes
   shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
-  creates: /usr/lib64/liblber-2.4.so.2.10.3
+  args:
+    creates: /usr/lib64/liblber-2.4.so.2.10.3
   when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
 
 - name: Download openldap manually, may need to change the link
