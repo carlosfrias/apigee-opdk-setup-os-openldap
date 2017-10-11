@@ -29,7 +29,6 @@
     yum:
       name: "{{ item  }}"
       state: absent
-      allow_downgrade:
     with_items:
     - "{{ openldap[1] }}"
     - "{{ openldap[2] }}"
