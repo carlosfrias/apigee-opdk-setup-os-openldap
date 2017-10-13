@@ -30,8 +30,8 @@
   - name: Clean yum cache
     shell: "yum clean all"
 #
-#  - name: Install openldap manually
-#    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
+  - name: Install openldap manually
+    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
 #
 #  - name: Install the remainder openldap manually
 #    shell: "rpm -ivh --oldpackage {{ openldap_manual_download[1:2] }}"
@@ -49,7 +49,14 @@
       name: "{{ item  }}"
       state: present
       allow_downgrade: yes
-    with_items: "{{ openldap_manual_download }}"
+    with_items: "{{ openldap_2_4_40 }}"
+#
+#  - name: Download openldap manually, may need to change the link
+#    yum:
+#      name: "{{ item  }}"
+#      state: present
+#      allow_downgrade: yes
+#    with_items: "{{ openldap_manual_download }}"
 
   become: yes
   when: opdk_version | version_compare('4.17.05', '<=')
