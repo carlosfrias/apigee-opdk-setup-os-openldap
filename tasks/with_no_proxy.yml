@@ -40,7 +40,7 @@
       state: present
       allow_downgrade: yes
     with_items: "{{ openldap_manual_download }}"
-  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+  when: opdk_version | version_compare('4.17.05', '<=')
 
 #  - name: Downgrade openldap packages if needed
 #    become: yes
