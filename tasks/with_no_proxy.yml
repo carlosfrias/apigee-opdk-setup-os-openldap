@@ -24,6 +24,9 @@
       state: absent
     with_itmes: "{{ opendldap }}"
 
+  - name: Clean yum cache
+    shell: "yum clean all"
+
 #  - name: Download openldap manually
 #    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
 #    args:
