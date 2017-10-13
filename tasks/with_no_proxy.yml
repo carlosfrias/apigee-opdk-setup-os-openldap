@@ -30,10 +30,11 @@
   - name: Clean yum cache
     shell: "yum clean all"
 
-#  - name: Download openldap manually
-#    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
-#    args:
-#      creates: /usr/lib64/liblber-2.4.so.2.10.3
+  - name: Install openldap manually
+    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
+
+  - name: Install the remainder openldap manually
+    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[1:2] }}"
 
 #  - name: Remove prior openldap servers and clients
 #    yum:
@@ -43,12 +44,14 @@
 #    - "{{ openldap[1] }}"
 #    - "{{ openldap[2] }}"
 
-  - name: Download openldap manually, may need to change the link
-    yum:
-      name: "{{ item  }}"
-      state: present
-      allow_downgrade: yes
-    with_items: "{{ openldap_manual_download }}"
+#  - name: Download openldap manually, may need to change the link
+#    yum:
+#      name: "{{ item  }}"
+#      state: present
+#      allow_downgrade: yes
+#    with_items:
+#    - "{{ openldap_manual_download[1] }}"
+#    - "{{ openldap_manual_download[2] }}"
 
   become: yes
   when: opdk_version | version_compare('4.17.05', '<=')
