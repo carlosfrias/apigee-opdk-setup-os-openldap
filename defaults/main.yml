@@ -10,15 +10,15 @@ openldap_2_4_40:
 - openldap-clients-2.4.40
 - openldap-servers-2.4.40
 
-openldap_manual_download:
-- openldap-2.4.40-13.el7.x86_64.rpm
-- openldap-clients-2.4.40-13.el7.x86_64.rpm
-- openldap-servers-2.4.40-13.el7.x86_64.rpm
-#
 #openldap_manual_download:
-#- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-2.4.40-13.el7.x86_64.rpm
-#- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-clients-2.4.40-13.el7.x86_64.rpm
-#- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-servers-2.4.40-13.el7.x86_64.rpm
+#- openldap-2.4.40-13.el7.x86_64.rpm
+#- openldap-clients-2.4.40-13.el7.x86_64.rpm
+#- openldap-servers-2.4.40-13.el7.x86_64.rpm
+
+openldap_manual_download:
+- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-2.4.40-13.el7.x86_64.rpm
+- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-clients-2.4.40-13.el7.x86_64.rpm
+- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-servers-2.4.40-13.el7.x86_64.rpm
 
 ldap_dependent_library_links:
 - { src: "/lib64/liblber-2.4.so.2.10.3", path: "/lib64/liblber-2.4.so.2" }
