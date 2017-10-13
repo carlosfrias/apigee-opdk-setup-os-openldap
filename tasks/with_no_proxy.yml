@@ -34,7 +34,7 @@
     shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
 
   - name: Install the remainder openldap manually
-    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[1:2] }}"
+    shell: "rpm -ivh --oldpackage {{ openldap_manual_download[1:2] }}"
 
 #  - name: Remove prior openldap servers and clients
 #    yum:
