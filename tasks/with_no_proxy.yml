@@ -5,7 +5,7 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ openldap }}"
-  when: opdk_version | version_compare('4.17.01', '<')
+  when: opdk_version | version_compare('4.17.05', '>')
 
 #- block:
 #- name: Downgrade openldap packages if needed
@@ -18,28 +18,33 @@
 #  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
 
 - block:
-  - name: Download openldap manually
-    become: yes
-    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
-    args:
-      creates: /usr/lib64/liblber-2.4.so.2.10.3
-
-  - name: Remove prior openldap servers and clients
-    become: yes
+  - name: Remove existing openldap packages
     yum:
-      name: "{{ item  }}"
+      name: "{{ item }}"
       state: absent
-    with_items:
-    - "{{ openldap[1] }}"
-    - "{{ openldap[2] }}"
+    with_itmes: "{{ opendldap }}"
+
+#  - name: Download openldap manually
+#    shell: "rpm -Uvh --oldpackage {{ openldap_manual_download[0] }}"
+#    args:
+#      creates: /usr/lib64/liblber-2.4.so.2.10.3
+
+#  - name: Remove prior openldap servers and clients
+#    yum:
+#      name: "{{ item  }}"
+#      state: absent
+#    with_items:
+#    - "{{ openldap[1] }}"
+#    - "{{ openldap[2] }}"
 
   - name: Download openldap manually, may need to change the link
-    become: yes
     yum:
       name: "{{ item  }}"
       state: present
       allow_downgrade: yes
     with_items: "{{ openldap_manual_download }}"
+
+  become: yes
   when: opdk_version | version_compare('4.17.05', '<=')
 
 #  - name: Downgrade openldap packages if needed
