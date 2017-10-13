@@ -4,6 +4,7 @@
   yum:
     name: "{{ item }}"
     state: present
+    allow_downgrade: yes
   with_items: "{{ openldap }}"
   when: opdk_version | version_compare('4.17.05', '>')
 
@@ -22,7 +23,9 @@
     yum:
       name: "{{ item }}"
       state: absent
-    with_items: "{{ openldap }}"
+    with_items:
+    - "{{ openldap[1] }}"
+    - "{{ openldap[2] }}"
 
   - name: Clean yum cache
     shell: "yum clean all"
