@@ -22,7 +22,7 @@
     yum:
       name: "{{ item }}"
       state: absent
-    with_items: "{{ opendldap }}"
+    with_items: "{{ openldap }}"
 
   - name: Clean yum cache
     shell: "yum clean all"
