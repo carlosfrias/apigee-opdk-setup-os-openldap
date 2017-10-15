@@ -27,11 +27,11 @@
 #    - "{{ openldap[1] }}"
 #    - "{{ openldap[2] }}"
 
-  - name: Clean yum cache
-    shell: "yum clean all"
+#  - name: Clean yum cache
+#    shell: "yum clean all"
 #
-  - name: Install openldap manually
-    shell: "rpm -Uvh --oldpackage {{ openldap_repo_host }}/{{ openldap_package_names[0] }}"
+#  - name: Install openldap manually
+#    shell: "rpm -Uvh --oldpackage {{ openldap_repo_host }}/{{ openldap_package_names[0] }}"
 #
 #  - name: Install the remainder openldap manually
 #    shell: "rpm -ivh --oldpackage {{ openldap_manual_download[1:2] }}"
