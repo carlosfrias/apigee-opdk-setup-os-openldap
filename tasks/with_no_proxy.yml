@@ -46,10 +46,17 @@
 
   - name: Download openldap manually, may need to change the link
     yum:
-      name: "{{ item  }}"
+      name: "{{ openldap_repo_host}}/{{ item  }}"
       state: present
       allow_downgrade: yes
-    with_items: "{{ openldap_2_4_40 }}"
+    with_items: "{{ openldap_package_names }}"
+#
+#  - name: Download openldap manually, may need to change the link
+#    yum:
+#      name: "{{ item  }}"
+#      state: present
+#      allow_downgrade: yes
+#    with_items: "{{ openldap_2_4_40 }}"
 #
 #  - name: Download openldap manually, may need to change the link
 #    yum:
