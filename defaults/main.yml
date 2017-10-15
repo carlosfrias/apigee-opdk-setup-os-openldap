@@ -30,3 +30,4 @@ ldap_dependent_library_links:
 - { src: "/lib64/libslapi-2.4.so.2.10.3", path: "/lib64/libslapi-2.4.so.2" }
 - { src: "/lib64/libldap_r-2.4.so.2.10.3", path: "/lib64/libldap_r-2.4.so.2" }
 
+#ftp://195.220.108.108/linux/centos/6.9/os/x86_64/Packages/cyrus-sasl-lib-2.1.23-15.el6_6.2.i686.rpm
