@@ -5,6 +5,9 @@ openldap:
 - openldap-clients
 - openldap-servers
 
+openldap_support:
+- http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus/x86_64/RPMS.classic//libsasl2-3-2.1.26-alt7.x86_64.rpm
+
 openldap_2_4_40:
 - openldap-2.4.40
 - openldap-clients-2.4.40
