@@ -30,12 +30,12 @@
 #  - name: Clean yum cache
 #    shell: "yum clean all"
 
-    - name: Install supporting packages
-      yum:
-        name: "{{ item }}"
-        state: present
-        allow_downgrade: yes
-      with_items: "{{ openldap_support }}"
+#    - name: Install supporting packages
+#      yum:
+#        name: "{{ item }}"
+#        state: present
+#        allow_downgrade: yes
+#      with_items: "{{ openldap_support }}"
 
     - name: Install openldap manually
       shell: "rpm -Uvh --oldpackage {{ openldap_repo_host }}/{{ openldap_versioned_names[0] }}"
