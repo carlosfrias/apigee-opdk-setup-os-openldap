@@ -8,17 +8,16 @@
   with_items: "{{ openldap }}"
   when: opdk_version | version_compare('4.17.05', '>')
 
-#- block:
-#- name: Downgrade openldap packages if needed
-#  become: yes
-#  yum:
-#    name: "{{ item }}"
-#    state: present
-#    allow_downgrade: yes
-#  with_items: "{{ openldap_2_4_40 }}"
-#  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
-
 - block:
+  - name: Downgrade openldap packages if needed
+    become: yes
+    yum:
+      name: "{{ item }}"
+      state: present
+      allow_downgrade: yes
+    with_items: "{{ openldap_2_4_40 }}"
+    when:  opdk_version | version_compare('4.17.05', '<=')
+
 #  - name: Remove existing openldap packages
 #    yum:
 #      name: "{{ item }}"
@@ -29,10 +28,10 @@
 
 #  - name: Clean yum cache
 #    shell: "yum clean all"
-#
-#  - name: Install openldap manually
-#    shell: "rpm -Uvh --oldpackage {{ openldap_repo_host }}/{{ openldap_package_names[0] }}"
-#
+
+  - name: Install openldap manually
+    shell: "rpm -Uvh --oldpackage {{ openldap_repo_host }}/{{ openldap_package_names[0] }}"
+
 #  - name: Install the remainder openldap manually
 #    shell: "rpm -ivh --oldpackage {{ openldap_manual_download[1:2] }}"
 
@@ -49,7 +48,7 @@
       name: "{{ openldap_repo_host}}/{{ item  }}"
       state: present
       allow_downgrade: yes
-    with_items: "{{ openldap_package_names }}"
+    with_items: "{{ openldap_versioned_names }}"
 #
 #  - name: Download openldap manually, may need to change the link
 #    yum:

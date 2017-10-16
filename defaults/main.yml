@@ -16,7 +16,7 @@ openldap_2_4_40:
 #- openldap-servers-2.4.40-13.el7.x86_64.rpm
 
 openldap_repo_host: http://mirror.centos.org/centos/6/os/x86_64/Packages
-openldap_package_names:
+openldap_versioned_names:
 - openldap-2.4.40-16.el6.x86_64.rpm
 - openldap-clients-2.4.40-16.el6.x86_64.rpm
 - openldap-servers-2.4.40-16.el6.x86_64.rpm
