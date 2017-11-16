@@ -4,9 +4,9 @@ openldap:
 - openldap
 - openldap-clients
 - openldap-servers
-
+openldap_legacy_version: 2.4.40
 openldap_support:
-- http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus/x86_64/RPMS.classic//libsasl2-3-2.1.26-alt7.x86_64.rpm
+- http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus/x86_64/RPMS.classic/libsasl2-3-2.1.26-alt7.x86_64.rpm
 
 openldap_2_4_40:
 - openldap-2.4.40
@@ -18,11 +18,11 @@ openldap_2_4_40:
 #- openldap-clients-2.4.40-13.el7.x86_64.rpm
 #- openldap-servers-2.4.40-13.el7.x86_64.rpm
 
-openldap_repo_host: http://mirror.centos.org/centos/6/os/x86_64/Packages
-openldap_versioned_names:
-- openldap-2.4.40-16.el6.x86_64.rpm
-- openldap-clients-2.4.40-16.el6.x86_64.rpm
-- openldap-servers-2.4.40-16.el6.x86_64.rpm
+#openldap_repo_host: http://mirror.centos.org/centos/6/os/x86_64/Packages
+#openldap_versioned_names:
+#- openldap-2.4.40-16.el6.x86_64.rpm
+#- openldap-clients-2.4.40-16.el6.x86_64.rpm
+#- openldap-servers-2.4.40-16.el6.x86_64.rpm
 
 #- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-2.4.40-13.el7.x86_64.rpm
 #- ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-clients-2.4.40-13.el7.x86_64.rpm

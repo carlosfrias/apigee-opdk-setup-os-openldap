@@ -1,86 +1,45 @@
 ---
-- name: Install openldap packages if needed
-  become: yes
-  yum:
-    name: "{{ item }}"
-    state: present
-    allow_downgrade: yes
-  with_items: "{{ openldap }}"
-  when: opdk_version | version_compare('4.17.05', '>')
-
 - block:
-  - name: Downgrade openldap packages if needed
+
+  - name: Install openldap packages if needed
     become: yes
     yum:
       name: "{{ item }}"
       state: present
       allow_downgrade: yes
-    with_items: "{{ openldap_2_4_40 }}"
-    when:  opdk_version | version_compare('4.17.05', '<=')
+    with_items: "{{ openldap }}"
+    when: opdk_version | version_compare('4.17.05', '>')
 
   rescue:
-#  - name: Remove existing openldap packages
-#    yum:
-#      name: "{{ item }}"
-#      state: absent
-#    with_items:
-#    - "{{ openldap[1] }}"
-#    - "{{ openldap[2] }}"
 
-#  - name: Clean yum cache
-#    shell: "yum clean all"
+    - block:
 
-#    - name: Install supporting packages
-#      yum:
-#        name: "{{ item }}"
-#        state: present
-#        allow_downgrade: yes
-#      with_items: "{{ openldap_support }}"
+      - name: Downgrade openldap packages if needed
+        become: yes
+        yum:
+          name: "{{ item }}"
+          state: present
+          allow_downgrade: yes
+        with_items: "{{ openldap_downgrade_version }}"
+        when:  opdk_version | version_compare('4.17.09', '<')
 
-    - name: Install openldap manually
-      shell: "rpm -Uvh --oldpackage {{ openldap_repo_host }}/{{ openldap_versioned_names[0] }}"
+      rescue:
+        - block:
 
-#  - name: Install the remainder openldap manually
-#    shell: "rpm -ivh --oldpackage {{ openldap_manual_download[1:2] }}"
+          - name: Installed named version
+            yum:
+              name: "{{ item }}"
+              state: present
+            with_items: "{{ openldap_named_versions }}"
 
-#  - name: Remove prior openldap servers and clients
-#    yum:
-#      name: "{{ item  }}"
-#      state: absent
-#    with_items:
-#    - "{{ openldap[1] }}"
-#    - "{{ openldap[2] }}"
+          rescue:
+            - name: Install the remainder openldap manually
+              shell: "rpm -ivh --oldpackage {{ openldap_named_versions }}"
 
-    - name: Download openldap manually, may need to change the link
-      yum:
-        name: "{{ openldap_repo_host}}/{{ item  }}"
-        state: present
-        allow_downgrade: yes
-      with_items:
-      - "{{ openldap_versioned_names[1] }}"
-      - "{{ openldap_versioned_names[2] }}"
+      become: yes
+      when: opdk_version | version_compare('4.17.05', '<=') and ansible_distribution_major_version | version_compare("6", ">" )
 
-#  - name: Download openldap manually, may need to change the link
-#    yum:
-#      name: "{{ item  }}"
-#      state: present
-#      allow_downgrade: yes
-#    with_items: "{{ openldap_2_4_40 }}"
-#
-#  - name: Download openldap manually, may need to change the link
-#    yum:
-#      name: "{{ item  }}"
-#      state: present
-#      allow_downgrade: yes
-#    with_items: "{{ openldap_manual_download }}"
-
-  become: yes
-  when: opdk_version | version_compare('4.17.05', '<=') and ansible_distribution_major_version | version_compare("6", ">" )
-
-#  - name: Downgrade openldap packages if needed
-#    become: yes
-#    shell: "yum install -y {{ openldap_2_4_40 | join(' ') }}"
-
+#- block:
 #  - name: Update LDAP dependent libraries
 #    file:
 #      force: yes
@@ -90,13 +49,6 @@
 #    with_items: "{{ ldap_dependent_library_links }}"
 
 #  rescue:
-#    - name: Download openldap manually, may need to change the link
-#      become: yes
-#      yum:
-#        name: "{{ item }}"
-#        state: present
-#        allow_downgrade: yes
-#      with_items: "{{ openldap_manual_download }}"
 
 #        - name: Update LDAP dependent libraries
 #          file:
