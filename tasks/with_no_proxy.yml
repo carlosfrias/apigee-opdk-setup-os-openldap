@@ -9,6 +9,10 @@
       allow_downgrade: yes
     with_items: "{{ openldap }}"
     when: opdk_version | version_compare('4.17.05', '>')
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
 
   rescue:
 
@@ -22,6 +26,11 @@
           allow_downgrade: yes
         with_items: "{{ openldap_downgrade_version }}"
         when:  opdk_version | version_compare('4.17.09', '<')
+        environment:
+          http_proxy: "{{ http_proxy }}"
+          https_proxy: "{{ https_proxy }}"
+          no_proxy: "{{ no_proxy }}"
+
 
       rescue:
         - block:
@@ -31,10 +40,20 @@
               name: "{{ item }}"
               state: present
             with_items: "{{ openldap_named_versions }}"
+            environment:
+              http_proxy: "{{ http_proxy }}"
+              https_proxy: "{{ https_proxy }}"
+              no_proxy: "{{ no_proxy }}"
+
 
           rescue:
             - name: Install the remainder openldap manually
               shell: "rpm -ivh --oldpackage {{ openldap_named_versions }}"
+              environment:
+                http_proxy: "{{ http_proxy }}"
+                https_proxy: "{{ https_proxy }}"
+                no_proxy: "{{ no_proxy }}"
+
 
       become: yes
       when: opdk_version | version_compare('4.17.05', '<=') and ansible_distribution_major_version | version_compare("6", ">" )

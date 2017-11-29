@@ -1,20 +1,91 @@
 ---
 # tasks file for apigee-opdk-setup-os-openldap
 
-- name: Do not use proxy definitions
-  include: with_no_proxy.yml
-  when: http_proxy is not defined and https_proxy is not defined
+#- name: Do not use proxy definitions
+#  include: with_no_proxy.yml
+#  when: http_proxy is not defined and https_proxy is not defined
+#
+#- name: Use proxy definitions
+#  include: with_proxy.yml
+#  when: http_proxy is defined and https_proxy is defined
 
-- name: Use proxy definitions
-  include: with_proxy.yml
-  when: http_proxy is defined and https_proxy is defined
+- block:
+
+  - name: Install openldap packages if needed
+    become: yes
+    yum:
+      name: "{{ item }}"
+      state: present
+      allow_downgrade: yes
+    with_items: "{{ openldap }}"
+    when: opdk_version | version_compare('4.17.05', '>')
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
+
+  rescue:
+
+    - block:
+
+      - name: Downgrade openldap packages if needed
+        become: yes
+        yum:
+          name: "{{ item }}"
+          state: present
+          allow_downgrade: yes
+        with_items: "{{ openldap_downgrade_version }}"
+        when:  opdk_version | version_compare('4.17.09', '<')
+        environment:
+          http_proxy: "{{ http_proxy }}"
+          https_proxy: "{{ https_proxy }}"
+          no_proxy: "{{ no_proxy }}"
 
 
-# Keep as we may need it as a manual backup, wait before implementing
-#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-2.4.40-13.el7.x86_64.rpm
-#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-servers-2.4.40-13.el7.x86_64.rpm
-#wget ftp://fr2.rpmfind.net/linux/centos/7.3.1611/os/x86_64/Packages/openldap-clients-2.4.40-13.el7.x86_64.rpm
-#yum downgrade openldap-2.4.40-13.el7.x86_64.rpm -y
-#yum install openldap-servers-2.4.40-13.el7.x86_64.rpm -y
-#yum install openldap-clients-2.4.40-13.el7.x86_64.rpm -y
-#gee-openldap -yyum install api
+      rescue:
+        - block:
+
+          - name: Installed named version
+            yum:
+              name: "{{ item }}"
+              state: present
+            with_items: "{{ openldap_named_versions }}"
+            environment:
+              http_proxy: "{{ http_proxy }}"
+              https_proxy: "{{ https_proxy }}"
+              no_proxy: "{{ no_proxy }}"
+
+
+          rescue:
+            - name: Install the remainder openldap manually
+              shell: "rpm -ivh --oldpackage {{ openldap_named_versions }}"
+              environment:
+                http_proxy: "{{ http_proxy }}"
+                https_proxy: "{{ https_proxy }}"
+                no_proxy: "{{ no_proxy }}"
+
+
+      become: yes
+      when: opdk_version | version_compare('4.17.05', '<=') and ansible_distribution_major_version | version_compare("6", ">" )
+
+#- block:
+#  - name: Update LDAP dependent libraries
+#    file:
+#      force: yes
+#      state: link
+#      src: "{{ item.src }}"
+#      path: "{{ item.path }}"
+#    with_items: "{{ ldap_dependent_library_links }}"
+
+#  rescue:
+
+#        - name: Update LDAP dependent libraries
+#          file:
+#            force: yes
+#            state: link
+#            src: "{{ item.src }}"
+#            path: "{{ item.path }}"
+#          with_items: "{{ ldap_dependent_library_links }}"
+
+#  when: opdk_version | version_compare('4.17.01', '>=') and opdk_version | version_compare('4.17.05', '<=')
+
