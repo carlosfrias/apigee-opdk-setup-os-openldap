@@ -5,10 +5,9 @@
   - name: Install openldap packages if needed
     become: yes
     yum:
-      name: "{{ item }}"
+      name: "{{ openldap }}"
       state: present
       allow_downgrade: yes
-    with_items: "{{ openldap }}"
     when: opdk_version is version_compare('4.17.05', '>')
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
@@ -22,10 +21,9 @@
       - name: Downgrade openldap packages if needed
         become: yes
         yum:
-          name: "{{ item }}"
+          name: "{{ openldap_downgrade_version }}"
           state: present
           allow_downgrade: yes
-        with_items: "{{ openldap_downgrade_version }}"
         when:  opdk_version is version_compare('4.17.09', '<')
         environment:
           http_proxy: "{{ http_proxy | default('') }}"
@@ -38,9 +36,8 @@
 
           - name: Installed named version
             yum:
-              name: "{{ item }}"
+              name: "{{ openldap_named_versions }}"
               state: present
-            with_items: "{{ openldap_named_versions }}"
             environment:
               http_proxy: "{{ http_proxy | default('') }}"
               https_proxy: "{{ https_proxy | default('') }}"
