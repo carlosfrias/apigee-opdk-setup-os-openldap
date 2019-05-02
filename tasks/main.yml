@@ -2,22 +2,10 @@
 # tasks file for apigee-opdk-setup-os-openldap
 - block:
 
-#  - name: Install openldap packages if needed
-#    become: yes
-#    yum:
-#      name: "{{ openldap }}"
-#      state: present
-#      allow_downgrade: yes
-#    when: opdk_version is version_compare('4.17.05', '>')
-#    environment:
-#      http_proxy: "{{ http_proxy | default('') }}"
-#      https_proxy: "{{ https_proxy | default('') }}"
-#      no_proxy: "{{ no_proxy | default('') }}"
-
   - name: Install openldap packages if needed
     become: yes
     yum:
-      name: "{{ openldap_downgrade_version }}"
+      name: "{{ openldap }}"
       state: present
       allow_downgrade: yes
     when: opdk_version is version_compare('4.17.05', '>')
