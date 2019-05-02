@@ -9,7 +9,7 @@
       state: present
       allow_downgrade: yes
     with_items: "{{ openldap }}"
-    when: opdk_version | version_compare('4.17.05', '>')
+    when: opdk_version is version_compare('4.17.05', '>')
     environment:
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -26,7 +26,7 @@
           state: present
           allow_downgrade: yes
         with_items: "{{ openldap_downgrade_version }}"
-        when:  opdk_version | version_compare('4.17.09', '<')
+        when:  opdk_version is version_compare('4.17.09', '<')
         environment:
           http_proxy: "{{ http_proxy }}"
           https_proxy: "{{ https_proxy }}"
@@ -57,7 +57,7 @@
 
 
       become: yes
-      when: opdk_version | version_compare('4.17.05', '<=') and ansible_distribution_major_version | version_compare("6", ">" )
+      when: opdk_version is version_compare('4.17.05', '<=') and ansible_distribution_major_version is version_compare("6", ">" )
 
 #- block:
 #  - name: Update LDAP dependent libraries
