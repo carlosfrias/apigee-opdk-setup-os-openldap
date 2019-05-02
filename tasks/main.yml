@@ -11,9 +11,9 @@
     with_items: "{{ openldap }}"
     when: opdk_version is version_compare('4.17.05', '>')
     environment:
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
-      no_proxy: "{{ no_proxy }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
+      no_proxy: "{{ no_proxy | default('') }}"
 
   rescue:
 
@@ -28,9 +28,9 @@
         with_items: "{{ openldap_downgrade_version }}"
         when:  opdk_version is version_compare('4.17.09', '<')
         environment:
-          http_proxy: "{{ http_proxy }}"
-          https_proxy: "{{ https_proxy }}"
-          no_proxy: "{{ no_proxy }}"
+          http_proxy: "{{ http_proxy | default('') }}"
+          https_proxy: "{{ https_proxy | default('') }}"
+          no_proxy: "{{ no_proxy | default('') }}"
 
 
       rescue:
@@ -42,18 +42,18 @@
               state: present
             with_items: "{{ openldap_named_versions }}"
             environment:
-              http_proxy: "{{ http_proxy }}"
-              https_proxy: "{{ https_proxy }}"
-              no_proxy: "{{ no_proxy }}"
+              http_proxy: "{{ http_proxy | default('') }}"
+              https_proxy: "{{ https_proxy | default('') }}"
+              no_proxy: "{{ no_proxy | default('') }}"
 
 
           rescue:
             - name: Install the remainder openldap manually
               shell: "rpm -ivh --oldpackage {{ openldap_named_versions }}"
               environment:
-                http_proxy: "{{ http_proxy }}"
-                https_proxy: "{{ https_proxy }}"
-                no_proxy: "{{ no_proxy }}"
+                http_proxy: "{{ http_proxy | default('') }}"
+                https_proxy: "{{ https_proxy | default('') }}"
+                no_proxy: "{{ no_proxy | default('') }}"
 
 
       become: yes
