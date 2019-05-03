@@ -30,7 +30,6 @@
           https_proxy: "{{ https_proxy | default('') }}"
           no_proxy: "{{ no_proxy | default('') }}"
 
-
       rescue:
         - block:
 
