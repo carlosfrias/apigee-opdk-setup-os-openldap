@@ -1,6 +1,6 @@
 # Skills Assessment — apigee-opdk-setup-os-openldap
 
-> **Skill domain:** Enterprise-Linux packaging engineering and resilience-pattern design — Apigee Edge Private Cloud (OPDK). Part of the broader Apigee platform-operations portfolio; see the [`bap_coe` portfolio hub →](https://github.com/carlosfrias/apigee-hybrid-workspace/blob/main/SKILLS-ASSESSMENT.md) for the cloud-native (Hybrid/K8s) counterpart and the full corpus.
+> **Skill domain:** Enterprise-Linux packaging engineering and resilience-pattern design — Apigee Edge Private Cloud (OPDK). Part of the broader Apigee platform-operations portfolio; see the [`bap_coe` portfolio hub →](https://github.com/carlosfrias/apigee-hybrid-workspace/blob/master/SKILLS-ASSESSMENT.md) for the cloud-native (Hybrid/K8s) counterpart and the full corpus.
 
 ---
 
@@ -40,9 +40,9 @@ The clearest single signals:
 
 | Skill | Repository | Assessment |
 |-------|-----------|-----------|
-| SAML SSO / dual-keypair (companion) | [`apigee-opdk-setup-edge-sso-config`](https://github.com/carlosfrias/apigee-opdk-setup-edge-sso-config) | [SKILLS-ASSESSMENT.md →](https://github.com/carlosfrias/apigee-opdk-setup-edge-sso-config/blob/main/SKILLS-ASSESSMENT.md) ✅ |
-| OPDK framework (flagship monorepo) | [`apigee-edge-opdk`](https://github.com/carlosfrias/apigee-edge-opdk) | [SKILLS-ASSESSMENT.md →](https://github.com/carlosfrias/apigee-edge-opdk/blob/main/SKILLS-ASSESSMENT.md) *(pending retrofit)* |
-| Cloud-native (Hybrid/K8s) counterpart | [`apigee-hybrid-workspace`](https://github.com/carlosfrias/apigee-hybrid-workspace) | [SKILLS-ASSESSMENT.md →](https://github.com/carlosfrias/apigee-hybrid-workspace/blob/main/SKILLS-ASSESSMENT.md) ✅ portfolio hub |
+| SAML SSO / dual-keypair (companion) | [`apigee-opdk-setup-edge-sso-config`](https://github.com/carlosfrias/apigee-opdk-setup-edge-sso-config) | [SKILLS-ASSESSMENT.md →](https://github.com/carlosfrias/apigee-opdk-setup-edge-sso-config/blob/master/SKILLS-ASSESSMENT.md) ✅ |
+| OPDK framework (flagship monorepo) | [`apigee-edge-opdk`](https://github.com/carlosfrias/apigee-edge-opdk) | [SKILLS-ASSESSMENT.md →](https://github.com/carlosfrias/apigee-edge-opdk/blob/master/SKILLS-ASSESSMENT.md) *(pending retrofit)* |
+| Cloud-native (Hybrid/K8s) counterpart | [`apigee-hybrid-workspace`](https://github.com/carlosfrias/apigee-hybrid-workspace) | [SKILLS-ASSESSMENT.md →](https://github.com/carlosfrias/apigee-hybrid-workspace/blob/master/SKILLS-ASSESSMENT.md) ✅ portfolio hub |
 
 ---
 
