@@ -1,5 +1,8 @@
 # apigee-opdk-setup-os-openldap — OpenLDAP RPM Version-Pinning with Nested Rescue
 
+> 🔄 **Evolution note:** The automation approach from this OPDK-era role has been consolidated into the `apigee-hybrid-workspace` Ansible collection. See the successor capability in the portfolio hub: [`carlosfrias/apigee-hybrid-workspace`](https://github.com/carlosfrias/apigee-hybrid-workspace) → `bap_coe/private_cloud/` and `bap_coe/apigee_hybrid/`. The collection README explains each role group’s business value and production context.
+
+
 > **An Ansible role that installs the correct OpenLDAP version for the installed Apigee OPDK release on RHEL/CentOS/OL** — using a four-level nested rescue chain that escalates from a versioned `yum` install all the way to a vendored RPM forced downgrade. The role that makes Apigee LDAP installable across the 4.16/4.17 release matrix on restrictive enterprise mirrors.
 
 > [!NOTE]
